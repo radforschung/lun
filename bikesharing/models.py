@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.gis.db import models as geomodels
+from macaddress.fields import MACAddressField
 
 # Create your models here.
 
@@ -40,3 +41,7 @@ class Rent(models.Model):
 	end_position = geomodels.PointField(default=None, null=True)
 	bike = models.ForeignKey('Bike', on_delete=models.PROTECT)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+
+class Lock(models.Model):
+	mac_address = MACAddressField(null=True)
+	unlock_key = models.BinaryField(editable=True)
