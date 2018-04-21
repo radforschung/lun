@@ -15,11 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls import url, include
 from rest_framework import routers, serializers, viewsets
 
+from .views import BikeViewSet
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'bikes', BikeViewSet)
 
 urlpatterns = [
-    path('bikesharing/', include('bikesharing.urls')),
-    path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    url(r'^', include(router.urls)),
+    url(r'^api/', include('rest_framework.urls', namespace='rest_framework'))
 ]
