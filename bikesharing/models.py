@@ -30,6 +30,7 @@ class Bike(models.Model):
 	availability_status = models.CharField(max_length=2, choices=bike_availability_status_choices, default='DI')
 	state = models.CharField(max_length=2, choices=bike_state_status_choices, default='US')
 	bike_type = models.CharField(max_length=2, choices=bike_type_choices, default='FR')
+	lock = models.ForeignKey('Lock', on_delete=models.PROTECT, null=True)
 	
 	def __str__(self):
 		return self.bike_number
@@ -45,3 +46,7 @@ class Rent(models.Model):
 class Lock(models.Model):
 	mac_address = MACAddressField(null=True)
 	unlock_key = models.BinaryField(editable=True)
+
+	def __str__(self):
+		return str(self.mac_address)
+		
